@@ -6,10 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.struts2.ServletActionContext;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.w951.util.action.CommonBaseAction;
+import com.w951.util.bean.CookieUtil;
 import com.w951.zsbus.permission.dto.MenuDTO;
 import com.w951.zsbus.permission.entity.GroupMenu;
 import com.w951.zsbus.permission.entity.MenuResource;
@@ -82,7 +85,7 @@ public class MainAction extends CommonBaseAction {
 				});
 				
 				for (MenuResource resource : resources) {
-					dto.getResources().add(new String[] {resource.getResource().getResourceName(), resource.getResource().getResourceUrl()});
+					dto.getResources().add(new String[] {resource.getResource().getResourceName(), resource.getResource().getDomain().getDomainUrl() + resource.getResource().getResourceUrl()});
 				}
 				
 				dtos.add(dto);
@@ -112,8 +115,13 @@ public class MainAction extends CommonBaseAction {
 	
 	public String loginOut() throws Exception {
 		session.clear();
+		CookieUtil.removeCookie(ServletActionContext.getResponse(), "loginInfo");
 		return SUCCESS;
 	}
+	
+	public String domain() throws Exception {
+    	return SUCCESS;
+    }
 	
 	// Action
 	

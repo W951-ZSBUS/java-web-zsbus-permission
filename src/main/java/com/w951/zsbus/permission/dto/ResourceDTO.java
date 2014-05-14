@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class ResourceDTO implements Serializable {
 	private static final long serialVersionUID = -2395711660751333963L;
 	private String resourceId;
+	private String domainName;
 	private String resourceIdentif;
 	private String resourceName;
 	private String resourceUrl;
@@ -147,5 +148,13 @@ public class ResourceDTO implements Serializable {
 
 	public void setResourceSort(Integer resourceSort) {
 		this.resourceSort = resourceSort;
+	}
+
+	public String getDomainName() {
+		return domainName;
+	}
+
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
 	}
 }

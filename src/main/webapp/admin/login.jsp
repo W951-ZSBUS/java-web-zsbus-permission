@@ -43,11 +43,11 @@
 						<table>
 				    		<tr>
 				    			<td align="right">用户名：</td>
-				    			<td colspan="2"><input class="easyui-validatebox" type="text" name="user.userNm" data-options="required:true"></input></td>
+				    			<td colspan="2"><input id="username" class="easyui-validatebox" type="text" name="user.userNm" data-options="required:true"></input></td>
 				    		</tr>
 				    		<tr>
 				    			<td align="right">密&nbsp;&nbsp;码：</td>
-				    			<td colspan="2"><input class="easyui-validatebox" type="password" name="user.userPass" data-options="required:true"></input></td>
+				    			<td colspan="2"><input id="userpass" class="easyui-validatebox" type="password" name="user.userPass" data-options="required:true"></input></td>
 				    		</tr>
 				    		<tr>
 				    			<td align="right">验证码：</td>

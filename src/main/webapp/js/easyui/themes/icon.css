@@ -86,6 +86,10 @@
 	background:url('icons/email_go.png') no-repeat center center;
 }
 
+.icon-layout-link{
+	background:url('icons/layout_link.png') no-repeat center center;
+}
+
 .icon-filesave{
 	background:url('icons/filesave.png') no-repeat center center;
 }

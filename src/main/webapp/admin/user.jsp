@@ -88,7 +88,7 @@
 			    }
 			}];
 		</script>
-		<title><%=System.getProperty("WEB_NAME") %></title>
+		<title><%=System.getProperty("systemName") %></title>
 	</head>
 	
 	<body>

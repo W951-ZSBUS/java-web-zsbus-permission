@@ -19,6 +19,8 @@ public class ResourceServiceImpl implements ResourceService {
 
 	private static final String QUERY_RESOURCE_BY_IDENTIF = "FROM Resource t WHERE t.resourceIdentif = :resourceIdentif";
 	
+	private static final String UPDATE_RESOURCE_DOMAIN = "UPDATE Resource t SET t.domain.domainId = :domainId WHERE t.resourceId IN (:resourceIds)";
+	
 	private static final String DELETE_MENU_BY_RESOURCE = "DELETE FROM MenuResource t WHERE t.resource.resourceId = :resourceId";
 	private static final String DELETE_BY_RESOURCE = "DELETE FROM Resource t WHERE t.resourceId = :resourceId";
 
@@ -120,4 +122,15 @@ public class ResourceServiceImpl implements ResourceService {
 
 		return null;
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public String updateResourceDomain(String domainId, String[] resourceIds) {
+		hibernateDao.excuteHQL(UPDATE_RESOURCE_DOMAIN, new Object[][] {
+			new Object[] {"domainId", domainId},
+			new Object[] {"resourceIds", resourceIds}
+		});
+		return null;
+	}
+
 }

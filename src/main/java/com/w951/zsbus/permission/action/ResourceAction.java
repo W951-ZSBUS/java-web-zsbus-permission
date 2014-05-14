@@ -30,6 +30,9 @@ public class ResourceAction extends CommonAction {
 	private int page;
 	private int rows;
 	
+	private String domainId;
+	private String resourceIds;
+	
 	// Action
 	
 	@Override
@@ -85,12 +88,30 @@ public class ResourceAction extends CommonAction {
 			for (Resource obj : list) {
 				dto = new ResourceDTO();
 				BeanUtil.beanToBean(dto, obj);
+				if (obj.getDomain() != null) dto.setDomainName(obj.getDomain().getDomainName());
 				dtos.add(dto);
 			}
 		}
 
 		jsonData.put("total", resourceService.getCount());
 		jsonData.put("rows", dtos);
+		result = JSONObject.fromObject(jsonData);
+
+		return SUCCESS;
+	}
+	
+	/**
+	 * 更新资源的域
+	 * @return
+	 * @throws Exception
+	 */
+	public String updateResourceDomain() throws Exception {
+		String message = resourceService.updateResourceDomain(domainId, resourceIds.split(","));
+
+		if (message != null) {
+			jsonData.put("message", message);
+		}
+		
 		result = JSONObject.fromObject(jsonData);
 
 		return SUCCESS;
@@ -152,5 +173,21 @@ public class ResourceAction extends CommonAction {
 
 	public void setResource(Resource resource) {
 		this.resource = resource;
+	}
+
+	public String getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(String domainId) {
+		this.domainId = domainId;
+	}
+
+	public String getResourceIds() {
+		return resourceIds;
+	}
+
+	public void setResourceIds(String resourceIds) {
+		this.resourceIds = resourceIds;
 	}
 }

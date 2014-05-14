@@ -15,7 +15,7 @@
 				$("#tree_menu").tree({
 					onClick: function(node) {
 						if (node.id != null && node.id.indexOf("action") == -1) {
-							funtl_easyui_tab.append("controler", node.text, "<%=request.getContextPath()%>/" + node.id, true);
+							funtl_easyui_tab.append("controler", node.text, node.id, true);
 						} else if (node.id.indexOf("action") != -1) {
 							funtl_easyui_ajax.post(node.id, null, function(data) {
 								if (data.message == null || data.message.length == 0) {

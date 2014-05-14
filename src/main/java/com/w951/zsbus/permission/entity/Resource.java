@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Resource implements java.io.Serializable {
 	private static final long serialVersionUID = -6701941706383339136L;
 	private String resourceId;
+	private Domain domain;
 	private String resourceIdentif;
 	private String resourceName;
 	private String resourceUrl;
@@ -49,6 +52,16 @@ public class Resource implements java.io.Serializable {
 
 	public void setResourceId(String resourceId) {
 		this.resourceId = resourceId;
+	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "domain_id")
+	public Domain getDomain() {
+		return this.domain;
+	}
+
+	public void setDomain(Domain domain) {
+		this.domain = domain;
 	}
 
 	@Column(name = "resource_identif", length = 20)

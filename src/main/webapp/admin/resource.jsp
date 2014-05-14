@@ -88,14 +88,58 @@
 			    	$("#dlg_manager").dialog("close");
 			    }
 			}];
+			
+			function setDomain() {
+				var row = $("#dg_list").datagrid("getSelected");
+				if (row == null) {
+					funtl_easyui_dialog.info("请选择需要配置的资源");
+				} else {
+					$("#dlg_manager_domain").dialog("open");
+				}
+			}
+			
+			var dlgManagerDomainBtn = [{
+			    text:"保存",
+			    iconCls:"icon-ok",
+			    handler:function() {
+			    	var rows = $("#dg_list").datagrid("getChecked");
+			    	var domainId = $("#domain_domainId").combobox("getValue");
+			    	var resourceIds = "";
+			    	for (var i = 0 ; i < rows.length ; i++) {
+			    		resourceIds += rows[i].resourceId + ",";
+			    	}
+			    	
+			    	var data = {
+						"domainId" : domainId,
+						"resourceIds" : resourceIds
+					};
+			    	funtl_easyui_ajax.post("permission/Resource/action/updateResourceDomain", data, function(data) {
+						if (data.message == null || data.message.length == 0) {
+							$("#dlg_manager_domain").dialog("close");
+							$("#dg_list").datagrid("reload");
+							funtl_easyui_dialog.info("数据已保存");
+						} else {
+							funtl_easyui_dialog.info(data.message);
+						}
+					});
+			    }
+			},{
+			    text:"取消",
+			    iconCls:"icon-cancel",
+			    handler:function() {
+			    	$("#dlg_manager_domain").dialog("close");
+			    }
+			}];
 		</script>
-		<title><%=System.getProperty("WEB_NAME") %></title>
+		<title><%=System.getProperty("systemName") %></title>
 	</head>
 	
 	<body>
-		<table id="dg_list" class="easyui-datagrid" data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:50,url:'permission/Resource/action/query',toolbar:'#dg_list_toolbar',onLoadError:funtl_easyui_ajax.onLoadError">
+		<table id="dg_list" class="easyui-datagrid" data-options="rownumbers:true,singleSelect:false,pagination:true,pageSize:50,url:'permission/Resource/action/query',toolbar:'#dg_list_toolbar',onLoadError:funtl_easyui_ajax.onLoadError">
 			<thead>
 	  			<tr>
+	  				<th data-options="checkbox:true"></th>
+	  				<th data-options="field:'domainName'">所属域</th>
 	  				<th data-options="field:'resourceIdentif'">资源标识</th>
 	  				<th data-options="field:'resourceName'">资源名称</th>
 	  				<th data-options="field:'resourceUrl'">资源链接</th>
@@ -119,6 +163,7 @@
 		  		<a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="add();">新增</a>
 		  		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="del();">删除</a>
 				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="edit();">编辑</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-layout-link',plain:true" onclick="setDomain();">域配置</a>
 			</div>
 	   	</div>
 		<script>
@@ -184,6 +229,15 @@
 		    		</tr>
 	   			</table>
 	   		</form>
+	   	</div>
+	   	
+	   	<div id="dlg_manager_domain" class="easyui-dialog" style="width:350px;height:auto;padding:10px" data-options="title:'域配置',buttons:dlgManagerDomainBtn,modal:true,closed:true">
+	   		<table align="center" style="width:100%;">
+	   			<tr>
+	   				<td align="right">选择对应域</td>
+	   				<td><input class="easyui-combobox" id="domain_domainId" data-options="valueField:'domainId',textField:'domainName',url:'permission/Domain/action/queryDomainArray'" /></td>
+	   			</tr>
+	   		</table>
 	   	</div>
 	</body>
 </html>

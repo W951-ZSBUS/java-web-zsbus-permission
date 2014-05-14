@@ -25,6 +25,7 @@
 			<groupId>com.w951</groupId>
 			<artifactId>w951-sys-model-orm</artifactId>
 			<version>1.0.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
